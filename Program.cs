@@ -24,36 +24,69 @@
 // m = 2, n = 3 -> A(m,n) = 9
 // m = 3, n = 2 -> A(m,n) = 29
 
-int ReadInt(string str)
-{
-    System.Console.Write(str);
-    return Convert.ToInt32(Console.ReadLine());
-}
-// вызов функции Аккермана
-void AkkermanFunction(int M, int N)
-{
-    Console.Write(Akkerman(M, N));
-}
+// int ReadInt(string str)
+// {
+//     System.Console.Write(str);
+//     return Convert.ToInt32(Console.ReadLine());
+// }
+// // вызов функции Аккермана
+// void AkkermanFunction(int M, int N)
+// {
+//     Console.Write(Akkerman(M, N));
+// }
 
-// функция Аккермана
-int Akkerman(int M, int N)
+// // функция Аккермана
+// int Akkerman(int M, int N)
+// {
+//     if (M == 0)
+//     {
+//         return N + 1;
+//     }
+//     else if (N == 0 && M > 0)
+//     {
+//         return Akkerman(M - 1, 1);
+//     }
+//     else
+//     {
+//         return Akkerman(M - 1, Akkerman(M, N - 1));
+//     }
+// }
+// // _____________________________
+// int M = ReadInt("Введите первое значение: ");
+// int N = ReadInt("Введите второе значение: ");
+
+// AkkermanFunction(M, N);
+
+// Задача 3: Задайте произвольный массив. Выведете его элементы, начиная с конца. Использовать рекурсию, не использовать циклы.
+
+int[] array = CreateArray(10, 10, 0);
+System.Console.WriteLine($"Произвольный массив => [{PrintArray(array)}]");
+System.Console.WriteLine($"Перевернутый массив => [{PrintArray(ArraySwap(array, array.Length - 1))}]");
+
+
+static int[] CreateArray(int size, int max, int min)
 {
-    if (M == 0)
+    int[] array = new int[size];
+    Random rand = new();
+    for (int i = 0; i < size; i++)
     {
-        return N + 1;
+        array[i] = rand.Next(min, max + 1);
     }
-    else if (N == 0 && M > 0)
-    {
-        return Akkerman(M - 1, 1);
-    }
-    else
-    {
-        return Akkerman(M - 1, Akkerman(M, N - 1));
-    }
+    return array;
 }
-// _____________________________
-int M = ReadInt("Введите первое значение: ");
-int N = ReadInt("Введите второе значение: ");
+static string PrintArray(int[] array)
+{
+    return string.Join(", ", array);
+}
+static int[] ArraySwap(int[] array, int index)
+{
 
-AkkermanFunction(M, N);
-
+    if (index <= 0)
+    {
+        return array;
+    }
+    int temp = array[index];
+    array[index] = array[array.Length - index - 1];
+    array[array.Length - index - 1] = temp;
+    return ArraySwap(array, index -= 2);
+}
